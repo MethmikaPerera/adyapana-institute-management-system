@@ -594,7 +594,7 @@ public class TeachersPanel extends javax.swing.JPanel {
 
         if (!tNo.isBlank()) {
             query.append(whereAdded ? " AND " : " WHERE ");
-            query.append("`s_no` LIKE '%" + tNo + "%'");
+            query.append("`t_no` LIKE '%" + tNo + "%'");
             whereAdded = true;
         }
 

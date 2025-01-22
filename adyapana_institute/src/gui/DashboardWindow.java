@@ -76,7 +76,7 @@ public class DashboardWindow extends javax.swing.JFrame {
         jPanel1.setPreferredSize(new java.awt.Dimension(1280, 75));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel1.setText("Adyapana Institute");
+        jLabel1.setText("ADYAPANA INSTITUTE");
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/logo-white-63px.png"))); // NOI18N
         jLabel2.setToolTipText("");
@@ -90,7 +90,7 @@ public class DashboardWindow extends javax.swing.JFrame {
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
-                .addContainerGap(865, Short.MAX_VALUE))
+                .addContainerGap(797, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

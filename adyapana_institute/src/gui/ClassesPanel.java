@@ -479,7 +479,7 @@ public class ClassesPanel extends javax.swing.JPanel {
         String classNo = regClassNoField.getText();
         int day = regDaysComboBox.getSelectedIndex();
         LocalTime sTime = regStartTimeField.getTime();
-        LocalTime eTime = regStartTimeField.getTime();
+        LocalTime eTime = regEndTimeField.getTime();
 
         String teacherSubId = "";
 
@@ -569,7 +569,7 @@ public class ClassesPanel extends javax.swing.JPanel {
         String classNo = manageClassNoField.getText();
         int dayId = manageDaysComboBox.getSelectedIndex();
         LocalTime sTime = manageStartTimeField.getTime();
-        LocalTime eTime = manageStartTimeField.getTime();
+        LocalTime eTime = manageEndTimeField.getTime();
 
         if (dayId == 0) {
             JOptionPane.showMessageDialog(this, "Select class day", "Error", JOptionPane.ERROR_MESSAGE);

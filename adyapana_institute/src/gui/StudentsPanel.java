@@ -524,12 +524,8 @@ public class StudentsPanel extends javax.swing.JPanel {
         jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel13.setText("Student Email");
 
-        enrollEmailField.setEnabled(false);
-
         jLabel15.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel15.setText("Class ID");
-
-        enrollClassIdField.setEnabled(false);
 
         enrollButton.setBackground(new java.awt.Color(0, 102, 0));
         enrollButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N

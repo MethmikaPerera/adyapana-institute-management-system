@@ -48,7 +48,7 @@
                   <Component id="jLabel2" min="-2" pref="63" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="865" max="32767" attributes="0"/>
+                  <EmptySpace pref="797" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -71,7 +71,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="36" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Adyapana Institute"/>
+            <Property name="text" type="java.lang.String" value="ADYAPANA INSTITUTE"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">

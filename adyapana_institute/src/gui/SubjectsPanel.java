@@ -388,6 +388,7 @@ public class SubjectsPanel extends javax.swing.JPanel {
                 manageSearchButton.setEnabled(false);
                 manageSubNoField.setEditable(false);
                 manageSubNameField.setEditable(false);
+                managePriceField.setEditable(true);
 
                 try {
                     ResultSet result = MySQL.executeSearch("SELECT * FROM `subject` WHERE `sub_no`='" + subNo + "'");
@@ -415,6 +416,7 @@ public class SubjectsPanel extends javax.swing.JPanel {
         try {
             MySQL.executeIUD("UPDATE `subject` SET `price`='" + price + "' WHERE `sub_no`='" + subNo + "'");
             JOptionPane.showMessageDialog(this, "Subject Updated Successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+            clearManageFields();
             loadSubjectData("");
         } catch (Exception e) {
             e.printStackTrace();
