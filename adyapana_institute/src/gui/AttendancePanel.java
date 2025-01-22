@@ -7,10 +7,16 @@ package gui;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.sql.ResultSet;
+import java.util.HashMap;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import models.MySQL;
+import java.sql.DriverManager;
+import java.sql.Connection;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -71,6 +77,7 @@ public class AttendancePanel extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         attendanceDataTable = new javax.swing.JTable();
+        attendancePrintReportButton = new javax.swing.JButton();
 
         jTabbedPane1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
 
@@ -134,20 +141,35 @@ public class AttendancePanel extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(attendanceDataTable);
 
+        attendancePrintReportButton.setBackground(new java.awt.Color(0, 102, 102));
+        attendancePrintReportButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        attendancePrintReportButton.setText("Print Full Report");
+        attendancePrintReportButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                attendancePrintReportButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1006, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1006, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(attendancePrintReportButton, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 586, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(attendancePrintReportButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -199,9 +221,30 @@ public class AttendancePanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_markAttendanceButtonActionPerformed
 
+    private void attendancePrintReportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_attendancePrintReportButtonActionPerformed
+        try {
+            Date fdate = new Date();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String date = dateFormat.format(fdate);
+
+            HashMap<String, Object> parameters = new HashMap<>();
+            parameters.put("Parameter1", date);
+
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/adyapana_institute", "root", "Akinda@2004");
+
+            JasperPrint report = JasperFillManager.fillReport("src/reports/attendance.jasper", parameters, connection);
+            JasperViewer.viewReport(report, false);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_attendancePrintReportButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable attendanceDataTable;
+    private javax.swing.JButton attendancePrintReportButton;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JPanel jPanel1;

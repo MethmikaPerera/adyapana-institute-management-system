@@ -17,6 +17,8 @@ import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
+import java.sql.DriverManager;
+import java.sql.Connection;
 
 /**
  *
@@ -228,6 +230,7 @@ public class PaymentsPanel extends javax.swing.JPanel {
         jLabel21 = new javax.swing.JLabel();
         duePayButton = new javax.swing.JButton();
         dueClearButton = new javax.swing.JButton();
+        duePrintReportButton = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         paidDataTable = new javax.swing.JTable();
@@ -396,6 +399,15 @@ public class PaymentsPanel extends javax.swing.JPanel {
             }
         });
 
+        duePrintReportButton.setBackground(new java.awt.Color(0, 102, 102));
+        duePrintReportButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        duePrintReportButton.setText("Print Full Report");
+        duePrintReportButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                duePrintReportButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -418,7 +430,7 @@ public class PaymentsPanel extends javax.swing.JPanel {
                                 .addComponent(dueClassNoField, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(dueSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 155, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel20)
@@ -426,7 +438,8 @@ public class PaymentsPanel extends javax.swing.JPanel {
                             .addComponent(jLabel21)
                             .addComponent(dueAmountField, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
                             .addComponent(duePayButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(dueClearButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(dueClearButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(duePrintReportButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane2)))
                 .addContainerGap())
@@ -449,10 +462,11 @@ public class PaymentsPanel extends javax.swing.JPanel {
                             .addComponent(dueStudentEmailField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(dueInvoiceIdField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(dueSearchButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(23, 23, 23)
                         .addComponent(jLabel20)
@@ -465,8 +479,10 @@ public class PaymentsPanel extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(duePayButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dueClearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addComponent(dueClearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(duePrintReportButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18))))
         );
 
         jTabbedPane1.addTab("Due", jPanel2);
@@ -954,6 +970,26 @@ public class PaymentsPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_paidPrintButtonActionPerformed
 
+    private void duePrintReportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_duePrintReportButtonActionPerformed
+        try {
+            Date fdate = new Date();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String date = dateFormat.format(fdate);
+
+            HashMap<String, Object> parameters = new HashMap<>();
+            parameters.put("Parameter1", date);
+
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/adyapana_institute", "root", "Akinda@2004");
+
+            JasperPrint report = JasperFillManager.fillReport("src/reports/due_report.jasper", parameters, connection);
+            JasperViewer.viewReport(report, false);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_duePrintReportButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField dueAmountField;
@@ -963,6 +999,7 @@ public class PaymentsPanel extends javax.swing.JPanel {
     private javax.swing.JTextField dueInvoiceIdField;
     private javax.swing.JTextField duePaidAmountField;
     private javax.swing.JButton duePayButton;
+    private javax.swing.JButton duePrintReportButton;
     private javax.swing.JButton dueSearchButton;
     private javax.swing.JTextField dueStudentEmailField;
     private javax.swing.JLabel jLabel1;
